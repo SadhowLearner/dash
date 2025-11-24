@@ -2,9 +2,9 @@
   import wallpaper from "$lib/assets/PixelArtGIF-ezgif.com-resize.gif"
 </script>
 
-<div>
+<div class="overflow-hidden">
 	<!-- style="width:100%;height:0;padding-bottom:55%;position:relative;" -->
-	<div class="absolute inset-0 h-dvh w-dvw z-[-5] overflow-hidden">
+	<div class="absolute inset-0 h-dvh w-dvw z-[-5]">
 		<img class="w-dvw h-dvh" style="aspect-ratio:480/254" src={wallpaper} alt="" width="1440">
 		<!-- <iframe
 			src="https://giphy.com/embed/pVGsAWjzvXcZW4ZBTE"

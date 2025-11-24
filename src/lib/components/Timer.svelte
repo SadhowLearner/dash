@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { timerModalOpen, time } from "./store";
   import { formatTime } from "$lib";
+	import { fade, slide } from "svelte/transition";
 
   let workMinutes = $state(25);
   let breakMinutes = $state(5);
@@ -12,7 +13,6 @@
   // initialize time based on workMinutes and react to changes
   $effect(() => {
     time.set(workMinutes * 60);
-
   });
 
   $effect(() => {
@@ -24,10 +24,10 @@
       // Waktu habis  
       if (isBreak) {
         isBreak = false;
-        $time = workMinutes * 60;
+        time.set(workMinutes * 60);
       } else {
         isBreak = true;
-        $time = breakMinutes * 60;
+        time.set(breakMinutes * 60);
       }
     }
 
@@ -47,11 +47,10 @@
 
 
 
-  function applySettings() {
-    time.update(v => v = workMinutes * 60);
+  function applySettings(e) {
+    time.set(workMinutes !== 0 ? workMinutes * 60 : 0)
     isBreak = false;
     isActive = false;
-    showSettings = false;
   }
 </script>
 
@@ -107,7 +106,10 @@
 
         <!-- Settings Panel -->
         {#if showSettings}
-          <div class="settings-panel mt-6 p-6 roboto-mono  bg-black/70 rounded-2xl border border-purple-500/50">
+          <div class="settings-panel mt-6 p-6 roboto-mono  bg-black/70 rounded-2xl border border-purple-500/50"
+           transition:slide={{ duration: 240 , axis: 'y'}}
+           
+          >
             <h3 class="text-xl font-bold text-purple-300 mb-4">Timer Settings</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
@@ -119,6 +121,7 @@
                   min="1"
                   max="120"
                   bind:value={workMinutes}
+                  onchange={applySettings}
                   class="w-full px-4 py-3 rounded-lg bg-black/50 border border-cyan-500/50 text-white focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/50"
                 />
               </div>
@@ -145,7 +148,7 @@
         {/if}
 
         <!-- Progress Bar -->
-        <div class="mt-6">
+        <div class={(showSettings ? "hidden": "block")+" mt-6"}>
           <div class="w-full h-2 bg-black/50 rounded-full overflow-hidden">
             <div 
               class="progress-bar h-full rounded-full transition-all duration-1000 bg-linear-to-r {isBreak ? 'from-pink-500 to-purple-500' : ' from-cyan-500 to-blue-500'}"
