@@ -16,12 +16,12 @@
 		on:click={() => {
 			timerModalOpen.update((v) => !v);
 		}}
-		class="absolute top-8 left-8 z-999 cursor-pointer rounded-2xl text-white hover:drop-shadow-[0_0_12px_currentColor]"
+		class="absolute top-3 right-2 m-5 z-999 cursor-pointer rounded-2xl text-white hover:drop-shadow-[0_0_12px_currentColor]"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			width="32"
-			height="32"
+			width="24"
+			height="24"
 			viewBox="0 0 24 24"
 			fill="none"
 			stroke="currentColor"
@@ -45,8 +45,8 @@
 			{formatTime($time)}
 		</div>
 	</div>
-
-  <Search />
+<!-- 
+  <Search /> -->
 
 	<!-- Overlay gelap untuk readability -->
 </div>
