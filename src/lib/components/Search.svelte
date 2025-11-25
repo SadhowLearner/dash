@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isDomain, isFullURL} from '$lib';
 	import { onMount } from 'svelte';
 
 	let query = $state('');
@@ -13,14 +14,20 @@
 
 	const enterEvent = (e: KeyboardEvent) => {
 		if (e.key === 'Enter') {
-			window.open(`https://google.com/search?q=${query}`, '_blank');
+			if (isFullURL(query)) {
+				window.open(query, "_blank")
+			} else if (isDomain(query)) {
+				window.open(`https://${query}`, '_blank');
+			} else {
+				window.open(`https://google.com/search?q=${query}`, '_blank');
+			}
 			query = '';
 		}
 	};
 </script>
 
 <div
-	class="relative mb-3 flex h-max flex-col items-center justify-center text-white shadow-lg shadow-slate-700"
+	class="relative mt-[0.08rem] flex h-max flex-col items-center justify-center text-white shadow-lg shadow-slate-700"
 >
 	<button
 		onclick={() => {
